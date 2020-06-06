@@ -1,6 +1,6 @@
 <template>
 	<header>
-		<h1>TODO it!</h1>
+		<h1>하루 한 시</h1>
 	</header>
 </template>
 

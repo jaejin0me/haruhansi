@@ -1,17 +1,23 @@
 <template>
   <div id="app">
-	  <TodoHeader></TodoHeader>
-	  <TodoInput v-on:addTodo="addTodo"></TodoInput>
-	  <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo"></TodoList>
-	  <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
+	  <Header></Header>
+	  <Navbar></Navbar>
+	  <Footer></Footer>
+	  <!--
+	  <Input v-on:addTodo="addTodo"></Input>
+	  <List v-bind:propsdata="todoItems" @removeTodo="removeTodo"></List>
+	  <Footer v-on:removeAll="clearAll"></Footer>
+	  !-->
   </div>
 </template>
 
 <script>
-import TodoFooter from './components/TodoFooter.vue'
-import TodoInput from './components/TodoInput.vue'
-import TodoList from './components/TodoList.vue'
-import TodoHeader from './components/TodoHeader.vue'
+import Footer from './components/Footer.vue'
+import Navbar from './components/Navbar.vue'
+import Input from './components/Input.vue'
+import List from './components/List.vue'
+import Header from './components/Header.vue'
+import Mainpage from './components/Mainpage.vue'
 
 export default {
 	data() {
@@ -41,10 +47,11 @@ export default {
 		}
 	},
 	components: {
-		'TodoHeader': TodoHeader,
-		'TodoFooter': TodoFooter,
-		'TodoList': TodoList,
-		'TodoInput': TodoInput,
+		'Header': Header,
+		'Footer': Footer,
+		'List': List,
+		'Input': Input,
+		'Navbar': Navbar,
 	}
 }
 </script>

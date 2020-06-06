@@ -1,15 +1,12 @@
 <template>
 	<div class="clearAllContainer">
-		<span class="clearAllbtn" @click="clearTodo">Clear All</span>
+		Footer
 	</div>
 </template>
 
 <script>
 export default {
 	methods: {
-		clearTodo() {
-			this.$emit('removeAll');
-		}
 	}
 }
 </script>
