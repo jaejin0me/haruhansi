@@ -13,6 +13,7 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/mholt/binding v0.3.0
+	github.com/rs/cors v1.7.0
 	github.com/stretchr/codecs v0.0.0-20170403063245-04a5b1e1910d // indirect
 	github.com/stretchr/gomniauth v0.0.0-20170717123514-4b6c822be2eb
 	github.com/stretchr/objx v0.2.0

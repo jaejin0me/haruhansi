@@ -2,6 +2,7 @@
   <div id="app">
 	  <Header></Header>
 	  <Navbar></Navbar>
+	  <Mainpage></Mainpage>
 	  <Footer></Footer>
 	  <!--
 	  <Input v-on:addTodo="addTodo"></Input>
@@ -52,6 +53,7 @@ export default {
 		'List': List,
 		'Input': Input,
 		'Navbar': Navbar,
+		'Mainpage': Mainpage,
 	}
 }
 </script>

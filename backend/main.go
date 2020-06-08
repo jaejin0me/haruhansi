@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -8,9 +9,11 @@ import (
 	"github.com/goincremental/negroni-sessions/cookiestore"
 	"github.com/gorilla/websocket"
 	"github.com/julienschmidt/httprouter"
+	"github.com/rs/cors"
 	"github.com/unrolled/render"
 	"github.com/urfave/negroni"
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 const (
@@ -58,6 +61,23 @@ func main() {
 		http.Redirect(w, req, "/login", http.StatusFound)
 	})
 
+	router.GET("/poems/:author/:title", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+		fmt.Println("test")
+		session := mongoSession.Copy()
+		defer session.Close()
+
+		var messages []Message
+
+		err := session.DB("kosmos").C("pomes").Find(bson.M{"title": ps.ByName("title"), "author": ps.ByName("author")}).All(&messages)
+
+		if err != nil {
+			renderer.JSON(w, http.StatusInternalServerError, err)
+			return
+		}
+
+		renderer.JSON(w, http.StatusOK, messages)
+	})
+
 	router.GET("/auth/:action/:provider", loginHandler)
 	router.POST("/rooms", createRoom)
 	router.GET("/rooms", retrieveRooms)
@@ -71,11 +91,21 @@ func main() {
 		newClient(socket, ps.ByName("room_id"), GetCurrentUser(r))
 	})
 
+	c := cors.New(cors.Options{
+		AllowedMethods:     []string{"GET", "POST", "OPTIONS"},
+		AllowedOrigins:     []string{"*"},
+		AllowCredentials:   true,
+		AllowedHeaders:     []string{"Content-Type", "Bearer", "Bearer ", "content-type", "Origin", "Accept"},
+		OptionsPassthrough: true,
+	})
+
+	handler := c.Handler(router)
+
 	n := negroni.Classic()
 	store := cookiestore.New([]byte(sessionSecret))
 	n.Use(sessions.Sessions(sessionKey, store))
-	n.Use(LoginRequired("/login", "/auth"))
-	n.UseHandler(router)
+	n.Use(LoginRequired("/login", "/auth", "/poems"))
+	n.UseHandler(handler)
 
 	n.Run(":3000")
 }

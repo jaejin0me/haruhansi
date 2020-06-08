@@ -24,6 +24,8 @@ github.com/julienschmidt/httprouter v1.3.0/go.mod h1:JR6WtHb+2LUe8TCKY3cZOxFyyO8
 github.com/mholt/binding v0.3.0 h1:gGLnN9XAbyi5st4t1vDfmhOkHUbMwUGegVdnAnCRYvk=
 github.com/mholt/binding v0.3.0/go.mod h1:fdTUY9qwc5FrbACIVqskE2Yjb3O/Kt9cPJ6TauRzkjw=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/rs/cors v1.7.0 h1:+88SsELBHx5r+hZ8TCkggzSstaWNbDvThkVK8H6f9ik=
+github.com/rs/cors v1.7.0/go.mod h1:gFx+x8UowdsKA9AchylcLynDq+nNFfI8FkUZdN/jGCU=
 github.com/stretchr/codecs v0.0.0-20170403063245-04a5b1e1910d h1:gXQ+QS3q874pcayiqszimfHPQ7ySFcekgzBMoTaVawk=
 github.com/stretchr/codecs v0.0.0-20170403063245-04a5b1e1910d/go.mod h1:RpfDhdqip2BYhzoE4esKm8axH5VywpvMW9o3wfcamek=
 github.com/stretchr/gomniauth v0.0.0-20170717123514-4b6c822be2eb h1:6lYIg/SCrz3gsCsEpRpK0BW3tBGt4VuQKlAleoxCgCc=
