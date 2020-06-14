@@ -1,2 +1,2 @@
-# showmethejjj
-web site for Jaejin Jang
+# haruhansi
+web site for a poem reading
