@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	sessions "github.com/goincremental/negroni-sessions"
@@ -61,35 +60,37 @@ func main() {
 		http.Redirect(w, req, "/login", http.StatusFound)
 	})
 
-	router.GET("/poems/:author/:title", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+	router.GET("/apoem", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		fmt.Println("test")
 		session := mongoSession.Copy()
 		defer session.Close()
 
-		var messages []Message
+		var poem Poem
 
-		err := session.DB("kosmos").C("pomes").Find(bson.M{"title": ps.ByName("title"), "author": ps.ByName("author")}).All(&messages)
+		collection := session.DB("kosmos").C("pomes")
+		pipeline := []bson.M{{"$sample": bson.M{"size": 1}}}
 
+		err := collection.Pipe(pipeline).One(&poem)
 		if err != nil {
 			renderer.JSON(w, http.StatusInternalServerError, err)
 			return
 		}
 
-		renderer.JSON(w, http.StatusOK, messages)
+		renderer.JSON(w, http.StatusOK, poem)
 	})
 
 	router.GET("/auth/:action/:provider", loginHandler)
 	router.POST("/rooms", createRoom)
 	router.GET("/rooms", retrieveRooms)
-	router.GET("/rooms/:id/messages", retrieveMessages)
-	router.GET("/ws/:room_id", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-		socket, err := upgrader.Upgrade(w, r, nil)
-		if err != nil {
-			log.Fatal("ServeHTTP:", err)
-			return
-		}
-		newClient(socket, ps.ByName("room_id"), GetCurrentUser(r))
-	})
+	//router.GET("/rooms/:id/messages", retrieveMessages)
+	//router.GET("/ws/:room_id", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	//	socket, err := upgrader.Upgrade(w, r, nil)
+	//	if err != nil {
+	//		log.Fatal("ServeHTTP:", err)
+	//		return
+	//	}
+	//	newClient(socket, ps.ByName("room_id"), GetCurrentUser(r))
+	//})
 
 	c := cors.New(cors.Options{
 		AllowedMethods:     []string{"GET", "POST", "OPTIONS"},
@@ -104,7 +105,7 @@ func main() {
 	n := negroni.Classic()
 	store := cookiestore.New([]byte(sessionSecret))
 	n.Use(sessions.Sessions(sessionKey, store))
-	n.Use(LoginRequired("/login", "/auth", "/poems"))
+	n.Use(LoginRequired("/login", "/auth", "/apoem"))
 	n.UseHandler(handler)
 
 	n.Run(":3000")
