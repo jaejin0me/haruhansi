@@ -1,0 +1,15 @@
+[Unit]
+Description=haruhansi backend
+
+[Service]
+ExecStart=/home/ubuntu/haruhansi/backend/backend
+Restart=on-failure
+RestartPreventExitStatus=255
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=notell
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
