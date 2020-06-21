@@ -3,7 +3,6 @@
 		{{ title }}
 		{{ author }}
 		{{ content }}
-		<button v-on:click="fetchData">get data</button>
 	</div>
 </template>
 

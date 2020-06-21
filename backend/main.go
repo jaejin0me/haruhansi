@@ -65,7 +65,7 @@ func main() {
 
 		var poem Poem
 
-		collection := session.DB("kosmos").C("pomes")
+		collection := session.DB("kosmos").C("poems")
 		pipeline := []bson.M{{"$sample": bson.M{"size": 1}}}
 
 		err := collection.Pipe(pipeline).One(&poem)
