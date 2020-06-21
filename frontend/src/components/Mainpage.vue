@@ -23,7 +23,7 @@ export default {
 	},
 	methods: {
 		fetchData: function() {
-			axios.get('http://127.0.0.1:3000/apoem')
+			axios.get('http://haruhansi.com:3000/apoem')
 			.then((response) => {
 				this.content = response.data.content;
 				this.title = response.data.title;

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	sessions "github.com/goincremental/negroni-sessions"
@@ -61,7 +60,6 @@ func main() {
 	})
 
 	router.GET("/apoem", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
-		fmt.Println("test")
 		session := mongoSession.Copy()
 		defer session.Close()
 
