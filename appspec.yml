@@ -15,4 +15,4 @@ hooks:
 # location은 프로젝트 기준으로 위치를 작성해준다!
     - location: /checkdeploy.sh
 # runas를 입력해주지 않으면 간혹 permission error가 날 수도
-      runas: root
+      runas: ubuntu
