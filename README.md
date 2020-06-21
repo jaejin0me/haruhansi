@@ -1,2 +1,2 @@
 # haruhansi
-web site for a poem reading
+the web site for a poem reading
