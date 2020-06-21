@@ -1,8 +1,8 @@
 <template>
 	<div class="Mainpage">
-		{{ title }}
-		{{ author }}
-		{{ content }}
+		<p>{{ title }}</p>
+		<p>{{ author }}</p>
+		<p>{{ content }}</p>
 	</div>
 </template>
 
