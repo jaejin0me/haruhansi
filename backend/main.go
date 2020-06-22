@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+	"os"
+	"time"
 
 	sessions "github.com/goincremental/negroni-sessions"
 	"github.com/goincremental/negroni-sessions/cookiestore"
@@ -32,7 +34,18 @@ var (
 func init() {
 	renderer = render.New()
 
-	s, err := mgo.Dial("mongodb://localhost:27017")
+	// We need this object to establish a session to our MongoDB.
+	mongoDBDialInfo := &mgo.DialInfo{
+		Addrs:    []string{os.Getenv("DBHOST")},
+		Timeout:  60 * time.Second,
+		Database: os.Getenv("DBAUTHDB"),
+		Username: os.Getenv("DBUSER"),
+		Password: os.Getenv("DBPW"),
+	}
+
+	// Create a session which maintains a pool of socket connections
+	// to our MongoDB.
+	s, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
 		panic(err)
 	}
