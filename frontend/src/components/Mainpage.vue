@@ -2,7 +2,7 @@
 	<div class="Mainpage">
 		<p>{{ title }}</p>
 		<p>{{ author }}</p>
-		<p>{{ content }}</p>
+		<vue-markdown :source="content"></vue-markdown>
 	</div>
 </template>
 
