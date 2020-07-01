@@ -4,6 +4,7 @@
 		<p>{{ title }}</p>
 		<p>{{ author }}</p>
 		<vue-markdown :source="content"></vue-markdown>
+		<i class="fas fa-arrow-right" v-on:click="fetchData"></i>
 	</div>
 </template>
 
@@ -44,5 +45,9 @@ export default {
 		color: #2f3b52;
 		font-weight: 900;
 		margin: 2.5rem 0 1.5rem
+	}
+	.fas{
+		color: green;
+		font-size: 3em;
 	}
 </style>

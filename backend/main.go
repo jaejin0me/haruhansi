@@ -83,7 +83,7 @@ func main() {
 		collection := session.DB("kosmos").C("poems")
 		if id != "empty" {
 			pipeline = []bson.M{
-				{"$match": bson.M{"_id": bson.M{"$ne": bson.ObjectId(id)}}},
+				{"$match": bson.M{"_id": bson.M{"$ne": bson.ObjectIdHex(id)}}},
 				{"$sample": bson.M{"size": 1}},
 			}
 		} else {
