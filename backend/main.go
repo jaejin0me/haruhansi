@@ -72,14 +72,23 @@ func main() {
 		http.Redirect(w, req, "/login", http.StatusFound)
 	})
 
-	router.GET("/apoem", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+	router.GET("/apoem/:id", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		session := mongoSession.Copy()
 		defer session.Close()
 
 		var poem Poem
+		id := ps.ByName("id")
+		var pipeline []bson.M
 
 		collection := session.DB("kosmos").C("poems")
-		pipeline := []bson.M{{"$sample": bson.M{"size": 1}}}
+		if id != "empty" {
+			pipeline = []bson.M{
+				{"$match": bson.M{"_id": bson.M{"$ne": bson.ObjectId(id)}}},
+				{"$sample": bson.M{"size": 1}},
+			}
+		} else {
+			pipeline = []bson.M{{"$sample": bson.M{"size": 1}}}
+		}
 
 		err := collection.Pipe(pipeline).One(&poem)
 		if err != nil {
